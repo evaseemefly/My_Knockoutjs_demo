@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<link rel="stylesheet" href="css/bootstrap.min.css" />
+		<script type="text/javascript" src="scripts/knockout-3.4.2.js"></script>
+	</head>
+	<body>
+		<hr />
+		<div class="container">
+			<table class="table">
+				<thread>
+					<tr>
+						<th>名称</th>
+						<th>数量</th>
+						<th>价格</th>
+					</tr>
+				</thread>
+				<tbody data-bind="foreach:items">
+					<tr>
+						<td data-bind="text:product.name"></td>
+						<td><select data-bind="options:[1,2,3,4,5,6],value: amount"></select></td>
+						<td data-bind="text:subTotal"></td>
+						<td ><a href="#" data-bind="click:$root.remove">移除</a></td>
+					</tr>
+				</tbody>
+			</table>
+			<h3>订单价格:<span data-bind="text:price"></span></h3>
+			<button data-bind="click:addComputer">添加一个电脑</button>
+		</div>
+		<hr />
+	</body>
+	<script type="text/javascript">
+		var products=[{name:"thinkpad",price:8900},{name:"小米Note",price:999},{name:"联想笔记本",price:5900},]
+		
+		function Order(){
+			var self=this;
+			this.items=ko.observableArray([new Item(products[0],1),new Item(products[1],2)]);
+			this.price=ko.computed(function(){
+				var p=0;
+				for(var i=0;i<self.items().length;i++){
+					var item=self.items()[i];
+					p+=item.product.price*item.amount();
+				}
+				return p;
+			},self);
+			this.remove = function(item) {
+    self.items.remove(item);
+   };
+ 
+   this.addComputer = function () {
+    self.items.push(new Item(products[2], 1));
+   };
+		}
+		
+		// 订单项类
+  function Item(product, amount) {
+   var self = this;
+   this.product = product;
+   this.amount = ko.observable(amount);
+   // 订单项总价
+   this.subTotal = ko.computed(function() {
+    return self.amount() * self.product.price;
+   }, self);
+  }
+		ko.applyBindings(new Order());
+
+	</script>
+</html>
