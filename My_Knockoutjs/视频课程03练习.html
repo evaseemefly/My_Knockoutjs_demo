@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="css/bootstrap.min.css" />
+		<script type="text/javascript" src="scripts/jquery-1.10.2.js"></script>
+		<script type="text/javascript" src="scripts/knockout-3.4.2.js"></script>
+		
+	</head>
+	<body>
+		<ul data-bind="foreach:PersonList">
+			<li data-bind="text:name"></li>
+		</ul>
+		<script type="text/javascript">
+			
+			//js对象化的方式（方法2）
+			var viewModelFunc=function(){
+				this.Name=ko.observable("zhang三");
+				this.PersonList=ko.observableArray([
+					{"name":"张三","age":20},
+					{"name":"李四","age":21},
+					{"name":"王五","age":22}					
+				]);
+			};
+			
+			var viewModel=new viewModelFunc();
+			
+			ko.applyBindings(viewModel);
+			
+		</script>
+	</body>
+</html>

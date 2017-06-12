@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="css/bootstrap.min.css" />
+		<script type="text/javascript" src="scripts/jquery-1.10.2.js"></script>
+		<script type="text/javascript" src="scripts/knockout-3.4.2.js"></script>
+		
+	</head>
+	<body>
+		<!--名字是<span data-bind="text:fullName"></span>-->
+		名字是<span data-bind="text:Name"></span>
+		<script type="text/javascript">
+			function AppViewModel(){
+				this.firstName=ko.observable('Dr');
+				this.lastName=ko.indexObservable('No');
+				
+				this.fullName=ko.computed(function(){
+					return this.firstName()+" "+this.lastName();
+				},this);
+			}
+			//字面量表示法(方法1)
+			var viewModel={
+				Name:ko.observable("张三")
+			};
+			
+			//js对象化的方式（方法2）
+			var viewModelFunc=function(){
+				this.Name=ko.observable("zhang三");
+			}
+			
+			var viewModel1=new viewModelFunc();
+			
+			ko.applyBindings(viewModel1);
+			
+		</script>
+	</body>
+</html>
